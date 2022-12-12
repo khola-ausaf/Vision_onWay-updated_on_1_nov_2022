@@ -98,7 +98,7 @@ class Progress extends StatelessWidget {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => workout()),
+                                      builder: (context) => Workout_screen()),
                                 );
                               }),
                         ],
@@ -112,3 +112,6 @@ class Progress extends StatelessWidget {
         ]));
   }
 }
+
+
+

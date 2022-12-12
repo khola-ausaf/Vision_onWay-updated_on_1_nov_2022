@@ -2,6 +2,8 @@
 //import 'dart:ffi';
 // ignore_for_file: non_constant_identifier_names
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
 import 'package:sign_in/screens/home/congratulation.dart';
@@ -14,6 +16,7 @@ import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 // ignore: camel_case_types
 class Day1_Exercises extends StatefulWidget {
   const Day1_Exercises({Key? key}) : super(key: key);
+  
 
   @override
   State<Day1_Exercises> createState() => _Day1_ExercisesState();
@@ -22,14 +25,28 @@ class Day1_Exercises extends StatefulWidget {
 // ignore: camel_case_types
 class _Day1_ExercisesState extends State<Day1_Exercises> {
   late YoutubePlayerController controller;
+  late final dref = FirebaseDatabase.instance.ref();
+  late DatabaseReference databaseReference;
+  setData() {
+    dref.child("progress").set({
+       
+      'title':"congralution you are successfully done your day 1 you are burn 230 calories in 10 mints"
+    });
+  }
+
+  showData() {
+    dref.once().then((snapshot) {
+      print(snapshot);
+    });
+  }
 
   @override
   // ignore: must_call_super
   void initState() {
-    // super.initState();
+    super.initState();
+    databaseReference = dref;
 
-    const url =
-        'https://www.youtube.com/watch?v=6iO3TSOC0ko&ab_channel=WatchShortFilms';
+    const url = 'https://youtu.be/qcVlGnq5B4Y';
 
     controller = YoutubePlayerController(
       initialVideoId: YoutubePlayer.convertUrlToId(url)!,
@@ -80,29 +97,25 @@ class _Day1_ExercisesState extends State<Day1_Exercises> {
           body: ListView(
             children: [
               Player,
-              Text(
-                  ' Monkaa\n - Animation Cartoon ...............\n .................................',
+              Spacer(),
+              Text('FULL BODY WORKOUT',
                   style: TextStyle(
-                    height: 1.3,
+                    height: 1.9,
                     fontSize: 25.0,
-                    color: Colors.purple[300],
+                    color: Color.fromARGB(255, 149, 76, 161),
+                  )),
+              Text(
+                  'The benefits of a full body workout are huge It is a great way to ensure you are training all muscles group one workout, no muscles left behind.Full body workouts tend to incorporate compound strength exercises, which are a super efficient way of training for functional strength as well as cardiovascular health',
+                  style: TextStyle(
+                    height: 1,
+                    fontSize: 17,
+                    color: Color.fromARGB(255, 178, 99, 192),
                   )),
               SizedBox(
-                height: 50,
+                height: 40,
               ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) =>Congratulation() ),
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  primary: Color.fromARGB(255, 234, 222, 222),
-                  onPrimary: Colors.purple[300],
-                  side: BorderSide(
-                      color: Color.fromARGB(255, 133, 17, 154), width: 2),
-                ),
+          ElevatedButton(
+  onPressed:setData,
                 child: const Text(
                   'Done!!',
                   style: TextStyle(
@@ -114,4 +127,5 @@ class _Day1_ExercisesState extends State<Day1_Exercises> {
           ),
         ),
       );
+
 }

@@ -99,7 +99,8 @@ class Person extends StatelessWidget {
             ],
           ),
         ),
-        body: Center(
+        body:
+        Center(
           child: GetBuilder<AuthController>(
             builder: (_authController) {
               return SingleChildScrollView(

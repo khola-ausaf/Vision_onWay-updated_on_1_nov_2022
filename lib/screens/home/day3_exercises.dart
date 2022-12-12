@@ -2,6 +2,7 @@
 //import 'dart:ffi';
 // ignore_for_file: non_constant_identifier_names
 
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 // import 'package:get/get_state_manager/src/simple/list_notifier.dart';
 // import 'package:sign_in/controllerBindings.dart';
@@ -21,14 +22,30 @@ class Day3_Exercises extends StatefulWidget {
 // ignore: camel_case_types
 class _Day3_ExercisesState extends State<Day3_Exercises> {
   late YoutubePlayerController controller;
+  late final dref = FirebaseDatabase.instance.ref();
+  late DatabaseReference databaseReference;
+  setData() {
+    dref.child("progress2").set({
+      'title':"congralution you are successfully done your day3 you are burn 230 calories in 10 mints"
+    });
+  }
+
+  showData() {
+    dref.once().then((snapshot) {
+      print(snapshot);
+    });
+  }
+
 
   @override
   // ignore: must_call_super
   void initState() {
     // super.initState();
+     super.initState();
+    databaseReference = dref;
 
     const url =
-        'https://www.youtube.com/watch?v=6iO3TSOC0ko&ab_channel=WatchShortFilms';
+        'https://youtu.be/RnP5gssGEec';
 
     controller = YoutubePlayerController(
       initialVideoId: YoutubePlayer.convertUrlToId(url)!,
@@ -62,7 +79,7 @@ class _Day3_ExercisesState extends State<Day3_Exercises> {
         builder: (Context, Player) => Scaffold(
           appBar: AppBar(
             title: Text(
-              'Day 1',
+              'Day 3',
               style: TextStyle(
                   fontSize: 21, color: Color.fromARGB(255, 255, 255, 255)),
             ),
@@ -90,26 +107,15 @@ class _Day3_ExercisesState extends State<Day3_Exercises> {
                 height: 50,
                 
               ),
-              
-ElevatedButton(
-  onPressed: () {
-    Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) =>Congratulation() ),
-                  );
-  },  
-  style: ElevatedButton.styleFrom(
-    
-    primary: Color.fromARGB(255, 234, 222, 222),
-    onPrimary: Colors.purple[300],
-    side: BorderSide(color: Color.fromARGB(255, 133, 17, 154), width: 2),
-  ),
-  child: const Text(
-    'Done!!',
-    style: TextStyle(fontSize: 34,    
-    ),
-  ),
-)
+ ElevatedButton(
+  onPressed:setData,
+                child: const Text(
+                  'Done!!',
+                  style: TextStyle(
+                    fontSize: 34,
+                  ),
+                ),
+              )
             ],
           ),
         ),
